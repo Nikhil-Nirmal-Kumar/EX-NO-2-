@@ -35,9 +35,78 @@ STEP-5: Display the obtained cipher text.
 
 
 Program:
-
+```
+#include<stdio.h>
+#include<string.h>
+#include<ctype.h>
+int main(){
+    char text[100],key[100],matrix[5][5],used[26]={0};
+    int i,j,k=0,r1,c1,r2,c2;
+    printf("Enter the plaintext: ");
+    scanf("%99s",text);
+    printf("Enter the keyword: ");
+    scanf("%99s",key);
+    used['J'-'A']=1;
+    for(i=0;key[i]!='\0';i++){
+        char ch=toupper(key[i]);
+        if(ch=='J'){
+            ch='I';
+        }
+        if(ch>='A'&&ch<='Z'&&!used[ch-'A']){
+            matrix[k/5][k%5]=ch;
+            used[ch-'A']=1;
+            k++;
+        }
+    }
+    for(i=0;i<26;i++){
+        if(!used[i]){
+            matrix[k/5][k%5]='A'+i;
+            k++;
+        }
+    }
+    for(i=0;text[i]!='\0';i++){
+        text[i]=toupper(text[i]);
+        if(text[i]=='J'){
+            text[i]='I';
+        }
+    }
+    printf("Cipher text: ");
+    for(i=0;text[i]!='\0';i+=2){
+        char a=text[i],b;
+        if(text[i+1]=='\0'||text[i+1]==a){
+            b='X';
+            i--;
+        }
+        else{
+            b=text[i+1];
+        }
+        for(j=0;j<25;j++){
+            if(matrix[j/5][j%5]==a){
+                r1=j/5;
+                c1=j%5;
+            }
+            if(matrix[j/5][j%5]==b){
+                r2=j/5;
+                c2=j%5;
+            }
+        }
+        if(r1==r2){
+            printf("%c%c",matrix[r1][(c1+1)%5],matrix[r2][(c2+1)%5]);
+        }
+        else if(c1==c2){
+            printf("%c%c",matrix[(r1+1)%5][c1],matrix[(r2+1)%5][c2]);
+        }
+        else{
+            printf("%c%c",matrix[r1][c2],matrix[r2][c1]);
+        }
+    }
+    printf("\n");
+    return 0;
+}
+```
 
 
 
 
 Output:
+<img width="1917" height="643" alt="image" src="https://github.com/user-attachments/assets/3eb2d403-a198-446e-98f6-e81ce455cf41" />
